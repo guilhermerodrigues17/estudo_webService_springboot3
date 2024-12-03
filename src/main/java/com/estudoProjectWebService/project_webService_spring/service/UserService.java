@@ -1,0 +1,19 @@
+package com.estudoProjectWebService.project_webService_spring.service;
+
+import com.estudoProjectWebService.project_webService_spring.entities.User;
+import com.estudoProjectWebService.project_webService_spring.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repository;
+
+    public List<User> findAll() {
+        return repository.findAll();
+    }
+}
