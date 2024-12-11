@@ -4,6 +4,7 @@ import com.estudoProjectWebService.project_webService_spring.entities.User;
 import com.estudoProjectWebService.project_webService_spring.repositories.UserRepository;
 import com.estudoProjectWebService.project_webService_spring.service.exceptions.DatabaseException;
 import com.estudoProjectWebService.project_webService_spring.service.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,15 @@ public class UserService {
     }
 
     public User update(Long id, User userObj) {
-        User entity = repository.getReferenceById(id);
-        entity.setName(userObj.getName());
-        entity.setEmail(userObj.getEmail());
-        entity.setPhone(userObj.getPhone());
+        try {
+            User entity = repository.getReferenceById(id);
+            entity.setName(userObj.getName());
+            entity.setEmail(userObj.getEmail());
+            entity.setPhone(userObj.getPhone());
 
-        return repository.save(entity);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 }
