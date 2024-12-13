@@ -40,4 +40,8 @@ public class ProductService {
 
         return repository.save(updatedObj);
     }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }
