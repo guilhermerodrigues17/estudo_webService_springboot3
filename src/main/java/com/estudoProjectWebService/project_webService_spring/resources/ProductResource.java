@@ -41,4 +41,10 @@ public class ProductResource {
         productObj = service.update(id, productObj);
         return ResponseEntity.ok().body(productObj);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
