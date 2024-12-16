@@ -2,6 +2,7 @@ package com.estudoProjectWebService.project_webService_spring.service;
 
 import com.estudoProjectWebService.project_webService_spring.entities.Order;
 import com.estudoProjectWebService.project_webService_spring.repositories.OrderRepository;
+import com.estudoProjectWebService.project_webService_spring.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class OrderService {
 
     public Order findById(Long id) {
         Optional<Order> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public Order insert(Order orderObj) {
+        return repository.save(orderObj);
     }
 }
